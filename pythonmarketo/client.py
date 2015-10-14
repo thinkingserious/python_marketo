@@ -47,6 +47,7 @@ class MarketoClient:
                     'get_email_content_by_id':self.get_email_content_by_id,
                     'get_email_template_content_by_id':self.get_email_template_content_by_id,
                     'get_email_templates':self.get_email_templates,
+                    'describe':self.describe,
                 }
 
                 result = method_map[method](*args,**kargs) 
@@ -236,6 +237,16 @@ class MarketoClient:
             ]
         }
         return self.post(data)
+        
+    def describe(self):
+        self.authenticate()
+        args = {
+            'access_token' : self.token
+        }
+        data = HttpLib().get("https://" + self.host + "/rest/v1/leads/describe.json", args)
+        if data is None: raise Exception("Empty Response")
+        if not data['success'] : raise MarketoException(data['errors'][0]) 
+        return data['result']
            
     def post(self, data):
         self.authenticate()
