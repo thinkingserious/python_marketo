@@ -178,7 +178,8 @@ class MarketoClient:
         activityTypeIds = activityTypeIds.split() if type(activityTypeIds) is str else activityTypeIds
         args = {
             'access_token' : self.token,
-            'activityTypeIds' : ",".join(activityTypeIds),
+            #'activityTypeIds' : ",".join(activityTypeIds),
+            'activityTypeIds' : activityTypeIds,
             'nextPageToken' : nextPageToken
         }
         if listId:
