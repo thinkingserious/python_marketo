@@ -40,6 +40,7 @@ class MarketoClient:
                     'get_leads_by_listId':self.get_leads_by_listId,
                     'get_activity_types':self.get_activity_types,
                     'get_lead_activity':self.get_lead_activity,
+                    'get_lead_changes':self.get_lead_changes,
                     'get_paging_token':self.get_paging_token,
                     'update_lead':self.update_lead,
                     'create_lead':self.create_lead,
@@ -206,6 +207,19 @@ class MarketoClient:
        
         return activity_result_list         
            
+    def get_lead_changes(self, nextPageToken, fields = [], batchSize=None, listID=None):
+        self.authenticate()
+        args = {
+            'access_token' : self.token,
+            'nextPageToken' : nextPageToken
+        }
+        if len(fields) > 0:
+            args['fields'] = ",".join(fields)
+        data = HttpLib().get("https://" + self.host + "/rest/v1/activities/leadchanges.json", args)
+        if data is None: raise Exception("Empty Response")
+        if not data['success'] : raise MarketoException(data['errors'][0])
+        return data
+        
     def get_paging_token(self, sinceDatetime):
         self.authenticate()
         args = {
