@@ -205,7 +205,7 @@ class MarketoClient:
             if 'result' in result:
                 activity_result_list.extend(result['result'])
        
-        return activity_result_list         
+        return activity_result_list
            
     def get_lead_changes(self, nextPageToken, fields = [], batchSize=None, listID=None):
         self.authenticate()
